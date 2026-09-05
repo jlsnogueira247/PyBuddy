@@ -118,6 +118,10 @@ with st.sidebar:
         ["Iniciante", "Intermediário"]
     )
 
+    if st.button("🗑️ Limpar conversa"):
+        st.session_state.messages = []
+        st.rerun()
+
     st.divider()
 
     st.caption(
