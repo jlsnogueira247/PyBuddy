@@ -1,7 +1,8 @@
+import os
+
 import streamlit as st
 from dotenv import load_dotenv
 from groq import Groq
-import os
 
 load_dotenv()
 
@@ -53,25 +54,32 @@ possível, seguir boas práticas de programação.
 Ao final das respostas técnicas, indique documentação oficial
 relevante, preferencialmente da documentação do Python ou da
 biblioteca utilizada.
-
-7.FORMATAÇÃO
-Use Markdown de forma simples e limpa. Não gere HTML, SVG,
-âncoras ou links para páginas locais do aplicativo.
 """
+
 
 groq_api_key = os.getenv("GROQ_API_KEY")
 
-client = Groq(api_key=groq_api_key)
 
-# Configuração da página
 st.set_page_config(
     page_title="PyBuddy",
     page_icon="🐍",
     layout="wide"
 )
 
-st.title("🐍 PyBuddy")
 
+if not groq_api_key:
+    st.error("API Key da Groq não encontrada.")
+    st.stop()
+
+
+client = Groq(api_key=groq_api_key)
+
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+st.title("🐍 PyBuddy")
 st.subheader("Seu companheiro para aprender Python")
 
 st.write(
@@ -79,26 +87,52 @@ st.write(
     "e receba explicações simples com exemplos de código."
 )
 
+
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+
 pergunta = st.chat_input("Digite sua dúvida sobre Python...")
 
-if pergunta:
-    st.write("Sua pergunta:")
-    st.write(pergunta)
 
-    resposta = client.chat.completions.create(
-    model="openai/gpt-oss-20b",
-    messages=[
-        {
-            "role": "system",
-            "content": CUSTOM_PROMPT
-        },
+if pergunta:
+
+    with st.chat_message("user"):
+        st.markdown(pergunta)
+
+    st.session_state.messages.append(
         {
             "role": "user",
             "content": pergunta
         }
-    ],
-    temperature=0.7,
-    max_tokens=2048
-)
+    )
 
-    st.write(resposta.choices[0].message.content)
+    try:
+        resposta = client.chat.completions.create(
+            model="openai/gpt-oss-20b",
+            messages=[
+                {
+                    "role": "system",
+                    "content": CUSTOM_PROMPT
+                },
+                *st.session_state.messages
+            ],
+            temperature=0.7,
+            max_tokens=2048
+        )
+
+        conteudo_resposta = resposta.choices[0].message.content
+
+        with st.chat_message("assistant"):
+            st.markdown(conteudo_resposta)
+
+        st.session_state.messages.append(
+            {
+                "role": "assistant",
+                "content": conteudo_resposta
+            }
+        )
+
+    except Exception as erro:
+        st.error(f"Erro ao consultar a IA: {erro}")
