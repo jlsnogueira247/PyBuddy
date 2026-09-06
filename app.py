@@ -194,8 +194,8 @@ Adapte sua resposta de acordo com esse nível.
             }
         )
 
-    except Exception as erro:
-
-        st.error(
-            f"Erro ao consultar a IA: {erro}"
-        )
+     except Exception:
+            st.error(
+                "⚠️ Não foi possível obter uma resposta. "
+                "Verifique sua conexão ou tente novamente."
+            )
