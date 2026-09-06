@@ -109,34 +109,55 @@ if "messages" not in st.session_state:
 with st.sidebar:
     st.title("🐍 PyBuddy")
 
-    st.write(
-        "Seu companheiro para aprender Python."
-    )
-
-    nivel = st.selectbox(
-        "Seu nível de conhecimento:",
-        ["Iniciante", "Intermediário"]
-    )
-
-    if st.button("🗑️ Limpar conversa"):
-        st.session_state.messages = []
-        st.rerun()
+    st.caption("Seu companheiro para aprender Python.")
 
     st.divider()
+
+    st.subheader("🎓 Seu nível")
+
+    nivel = st.selectbox(
+        "Escolha seu nível de conhecimento:",
+        ["Iniciante", "Intermediário"]
+    )
 
     st.caption(
         "O nível escolhido será utilizado para adaptar "
         "as explicações da IA."
     )
 
+    st.divider()
+
+    if st.button("🗑️ Limpar conversa", use_container_width=True):
+        st.session_state.messages = []
+        st.rerun()
+
+    st.divider()
+
+    st.subheader("ℹ️ Sobre")
+
+    st.write(
+        "O PyBuddy é um assistente de programação desenvolvido "
+        "em Python para auxiliar no aprendizado de programação."
+    )
+
 
 st.title("🐍 PyBuddy")
+
 st.subheader("Seu companheiro para aprender Python")
 
 st.write(
-    "Faça perguntas sobre Python, programação e lógica "
-    "e receba explicações adaptadas ao seu nível."
+    "Tire suas dúvidas, entenda seus erros e aprenda "
+    "programação na prática."
 )
+
+st.divider()
+
+if not st.session_state.messages:
+    st.info(
+        "👋 Olá! Eu sou o PyBuddy. "
+        "Faça uma pergunta sobre Python, programação ou lógica "
+        "para começarmos."
+    )   
 
 
 for message in st.session_state.messages:
@@ -194,8 +215,8 @@ Adapte sua resposta de acordo com esse nível.
             }
         )
 
-     except Exception:
-            st.error(
-                "⚠️ Não foi possível obter uma resposta. "
-                "Verifique sua conexão ou tente novamente."
-            )
+    except Exception:
+        st.error(
+        "⚠️ Não foi possível obter uma resposta. "
+        "Verifique sua conexão ou tente novamente."
+        )
