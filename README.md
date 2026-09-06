@@ -8,6 +8,10 @@ para auxiliar estudantes no aprendizado de programação.
 A aplicação utiliza **Streamlit** para a interface e a **Groq API**
 para gerar as respostas do assistente.
 
+## 🖥️ Demonstração
+
+![PyBuddy em funcionamento](assets/pybuddy-demo.png)
+
 ## 🚀 Acesse o projeto
 
 👉 **[Testar o PyBuddy online](https://jlsnogueira247-pybuddy-app-eov8w8.streamlit.app/)**
