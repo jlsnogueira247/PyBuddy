@@ -48,23 +48,23 @@ git clone URL_DO_REPOSITORIO
 cd PyBuddy
 ```
 ```markdown
-###2. Crie um ambiente virtual
+### 2. Crie um ambiente virtual
 python -m venv .venv
 ```
 ```markdown
-###3. Ative o ambiente virtual
+### 3. Ative o ambiente virtual
 
 No Windows:
 
 .venv\Scripts\activate
 ```
 ```markdown
-###4. Instale as dependências
+### 4. Instale as dependências
 
 pip install -r requirements.txt
 ```
 ```markdown
-###5. Configure a API Key
+### 5. Configure a API Key
 
 Crie um arquivo **.env** na raiz do projeto:
 
@@ -73,7 +73,7 @@ GROQ_API_KEY=sua_chave_aqui
 ⚠️ Importante: nunca compartilhe sua API Key ou publique o arquivo .env.
 ```
 ```markdown
-###6. Execute a aplicação
+### 6. Execute a aplicação
 
 streamlit run app.py
 ```
